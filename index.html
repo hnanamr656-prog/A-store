@@ -1,158 +1,374 @@
+
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AH STORE</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>AH STORE</title>
 
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background: #ffffff;
-            color: #000;
-            overflow-x: hidden;
-        }
+<style>
+  :root{
+    --black:#0b0b0b;
+    --white:#ffffff;
+    --accent:#e6007e; /* accent color if needed */
+    --muted:#f4f4f4;
+    --green:#25D366;
+  }
 
-        /* ---------------------- Animation ---------------------- */
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family: "Segoe UI", Tahoma, Arial, "Noto Kufi Arabic", sans-serif;
+    background:var(--white);
+    color:var(--black);
+    -webkit-font-smoothing:antialiased;
+  }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  /* ===== header (top bar) ===== */
+  .topbar{
+    position:sticky;
+    top:0;
+    z-index:1200;
+    background:linear-gradient(0deg, rgba(0,0,0,0.95), rgba(0,0,0,0.95));
+    color:var(--white);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+    padding:10px 14px;
+    box-shadow:0 2px 8px rgba(0,0,0,0.2);
+  }
+  .topbar .left, .topbar .right{display:flex;align-items:center;gap:12px}
+  .logo{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .logo img{
+    height:44px;
+    width:auto;
+    border-radius:6px;
+    object-fit:contain;
+    background:#fff;
+    padding:2px;
+  }
+  .brand {font-weight:700; font-size:18px; letter-spacing:1px}
+  .search {
+    flex:1;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    max-width:640px;
+    margin-inline:12px;
+  }
+  .search input{
+    width:100%;
+    padding:10px 12px;
+    border-radius:8px;
+    border:0;
+    outline:none;
+    font-size:15px;
+  }
 
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+  .icon-btn{
+    background:transparent;
+    border:0;
+    color:var(--white);
+    font-size:20px;
+    cursor:pointer;
+  }
 
-        @keyframes zoomIn {
-            from { opacity: 0; transform: scale(1.1); }
-            to { opacity: 1; transform: scale(1); }
-        }
+  /* ===== hero/banner ===== */
+  .hero{
+    width:100%;
+    height:420px;
+    background: url('images/AH STORE.jpeg') center/cover no-repeat;
+    display:flex;
+    align-items:flex-end;
+    justify-content:flex-end;
+    padding:18px;
+  }
+  .hero .banner-caption{
+    background:rgba(255,255,255,0.9);
+    color:var(--black);
+    padding:14px 16px;
+    border-radius:8px;
+    max-width:320px;
+    text-align:right;
+    transform: translateY(10px);
+    animation: fadeUp .9s ease both;
+  }
+  .banner-caption h1{margin:0;font-size:20px}
+  .banner-caption p{margin:6px 0 0;color:#333;font-size:14px}
 
-        /* ---------------------- البانر ---------------------- */
+  /* ===== categories row (circular icons) ===== */
+  .cats-wrap{
+    display:flex;
+    gap:18px;
+    padding:18px;
+    overflow:auto;
+    align-items:center;
+    background:var(--white);
+  }
+  .cat{
+    min-width:92px;
+    text-align:center;
+    flex:0 0 auto;
+  }
+  .cat .circle{
+    width:76px;height:76px;border-radius:50%;
+    background:#fff;border:1px solid #eee;
+    display:flex;align-items:center;justify-content:center;
+    overflow:hidden;margin:auto;
+  }
+  .cat img{width:100%;height:100%;object-fit:cover}
+  .cat p{margin:8px 0 0;font-size:13px}
 
-        .header-banner {
-            width: 100%;
-            height: 420px;
-            background: url('images/AH STORE.jpeg') center/cover no-repeat;
-            animation: zoomIn 1.3s ease-out;
-        }
+  /* ===== featured sections (grid) ===== */
+  .sections{padding:18px}
+  .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
+  .section-title h2{margin:0;font-size:20px}
+  .view-all{color:#666;font-size:14px;text-decoration:none}
 
-        /* ---------------------- هيدر ---------------------- */
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap:16px;
+  }
+  .card{
+    background:#fff;border-radius:8px;border:1px solid #eee;overflow:hidden;
+    transition: transform .18s ease, box-shadow .18s ease;
+  }
+  .card:hover{ transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
+  .card img{width:100%;height:230px;object-fit:cover;display:block}
+  .card-body{padding:12px}
+  .card-body h3{margin:4px 0;font-size:16px}
+  .price{color:var(--accent);font-weight:700;margin-top:6px}
+  .actions{display:flex;gap:8px;margin-top:10px}
+  .btn{
+    flex:1;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:var(--black);cursor:pointer;text-decoration:none;text-align:center;font-weight:700;
+  }
+  .btn-cta{background:var(--black);color:#fff;border:0}
 
-        header {
-            background: #000;
-            padding: 20px;
-            text-align: center;
-            color: #fff;
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 2px;
-            animation: fadeDown 1.2s ease-out;
-        }
+  /* ===== contact & big about ===== */
+  .big-about{
+    padding:30px;
+    background:linear-gradient(180deg,#fff,#fbfbfb);
+    max-width:1100px;margin:30px auto;border-radius:10px;border:1px solid #eee;
+  }
+  .big-about h2{font-size:24px;margin:0 0 12px}
+  .big-about p{font-size:17px;line-height:1.9;color:#333;margin:0}
 
-        /* ---------------------- تعريف الشركة ---------------------- */
+  /* ===== contact block ===== */
+  .contact-block{
+    text-align:center;padding:28px;margin:18px auto;max-width:900px;
+  }
+  .wa-btn{
+    display:inline-block;background:var(--green);color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;
+    box-shadow:0 6px 20px rgba(37,211,102,0.18);
+  }
 
-        .about {
-            padding: 40px 25px;
-            text-align: center;
-            line-height: 2.2;
-            font-size: 20px;
-            max-width: 900px;
-            margin: auto;
-            animation: fadeIn 1.4s ease-out;
-        }
+  /* ===== footer ===== */
+  footer{
+    background:var(--black);color:var(--white);padding:28px 18px;margin-top:28px;
+  }
+  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;max-width:1100px;margin:auto}
+  .footer-grid h4{margin:0 0 8px;font-size:16px}
+  .socials a{display:inline-block;margin-left:8px;color:#fff;text-decoration:none}
 
-        .about h2 {
-            font-size: 28px;
-            margin-bottom: 15px;
-            color: #000;
-            animation: fadeIn 1.6s ease-out;
-        }
+  /* ===== bottom nav (mobile) ===== */
+  .bottom-nav{
+    position:fixed;left:0;right:0;bottom:0;z-index:1400;
+    display:flex;justify-content:space-around;align-items:center;padding:8px 6px;background:#fff;border-top:1px solid #eee;
+  }
+  .bottom-nav a{flex:1;text-align:center;color:#111;text-decoration:none;font-size:13px}
+  .bottom-nav .center{
+    transform:translateY(-10px);
+    background:var(--accent);color:#fff;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-weight:700;
+    box-shadow:0 8px 25px rgba(230,0,126,0.18);
+  }
 
-        /* ---------------------- تواصل معنا ---------------------- */
+  /* responsive tweaks */
+  @media(min-width:900px){
+    .hero{height:520px}
+    .card img{height:320px}
+    .bottom-nav{display:none}
+  }
 
-        .contact {
-            background: #f7f7f7;
-            padding: 40px 20px;
-            text-align: center;
-            animation: fadeIn 1.6s ease-out;
-        }
-
-        .contact h2 {
-            font-size: 26px;
-            margin-bottom: 10px;
-        }
-
-        .contact a {
-            display: inline-block;
-            margin-top: 15px;
-            padding: 12px 25px;
-            font-size: 20px;
-            background: #25D366;
-            color: #fff;
-            border-radius: 6px;
-            text-decoration: none;
-            font-weight: bold;
-            animation: fadeIn 2s ease-out;
-        }
-
-        .contact a:hover {
-            opacity: 0.8;
-        }
-
-        /* ---------------------- الفوتر ---------------------- */
-
-        footer {
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 25px;
-            margin-top: 30px;
-            font-size: 18px;
-            animation: fadeIn 2.2s ease-out;
-        }
-    </style>
+  /* animations */
+  @keyframes fadeUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
+  .fade-up{animation:fadeUp .8s ease both}
+</style>
 </head>
-
 <body>
 
-    <!-- البانر -->
-    <div class="header-banner"></div>
+  <!-- topbar -->
+  <div class="topbar fade-up">
+    <div class="left">
+      <div class="logo">
+        <!-- use the banner small version or logo -->
+        <img src="images/AH STORE.jpeg" alt="AH STORE logo">
+        <div class="brand">AH STORE</div>
+      </div>
+    </div>
 
-    <!-- هيدر -->
-    <header>AH STORE</header>
+    <div class="search" role="search">
+      <input id="searchInput" placeholder="ابحثي عن منتجات، موديلات، ألوان..." aria-label="search">
+    </div>
 
-    <!-- تعريف كبير للشركة -->
-    <section class="about">
-        <h2>من نحن</h2>
-        <p>
-            AH STORE هو متجر متخصص في بيع الملابس الرجالي والحريمي والأطفال، بالإضافة إلى تشكيلات
-            متنوعة من المنتجات المختارة بعناية.  
-            هدفنا تقديم منتجات عالية الجودة وبأسعار تنافسية تناسب كل العملاء، مع توفير تجربة شراء مريحة
-            وسريعة سواء عبر الموقع أو من خلال فريق خدمة العملاء.  
-            نعمل مع فريق من أفضل المسوقين لتوفير أحدث الصيحات والتصميمات، ونحرص دائمًا على تقديم خدمة احترافية
-            تضمن رضا العميل وسهولة التواصل والاستلام.  
-            رؤيتنا هي بناء متجر موثوق يلبي جميع احتياجات الأسرة ويقدّم أفضل تجربة شراء عبر الإنترنت.
-        </p>
-    </section>
+    <div class="right">
+      <button class="icon-btn" aria-label="favorite">♡</button>
+      <button class="icon-btn" aria-label="cart">🛒</button>
+    </div>
+  </div>
 
-    <!-- تواصل معنا -->
-    <section class="contact">
-        <h2>تواصل معنا</h2>
-        <p>لأي استفسار أو طلبات خاصة، تواصل معنا مباشرة على الواتساب</p>
+  <!-- hero banner -->
+  <div class="hero" role="img" aria-label="banner"></div>
 
-        <a href="https://wa.me/201040513887" target="_blank">
-            تواصل عبر الواتساب
-        </a>
-    </section>
+  <!-- categories (circular icons) -->
+  <div class="cats-wrap" aria-hidden="false">
+    <div class="cat" tabindex="0">
+      <div class="circle"><img src="images/cat-women.jpg" alt="نساء"></div>
+      <p>نساء</p>
+    </div>
+    <div class="cat" tabindex="0">
+      <div class="circle"><img src="images/cat-men.jpg" alt="رجال"></div>
+      <p>رجال</p>
+    </div>
+    <div class="cat" tabindex="0">
+      <div class="circle"><img src="images/cat-kids.jpg" alt="أطفال"></div>
+      <p>أطفال</p>
+    </div>
+    <div class="cat" tabindex="0">
+      <div class="circle"><img src="images/cat-large.jpg" alt="مقاسات كبيرة"></div>
+      <p>مقاسات كبيرة</p>
+    </div>
+    <!-- add more categories if needed -->
+  </div>
 
-    <!-- الفوتر -->
-    <footer>
-        © 2025 AH STORE — جميع الحقوق محفوظة
-    </footer>
+  <!-- featured / products -->
+  <div class="sections">
+    <div class="section-title">
+      <h2>منتجات مختارة</h2>
+      <a class="view-all" href="#products">عرض الكل</a>
+    </div>
+
+    <div class="grid" id="products">
+      <!-- card 1 -->
+      <div class="card fade-up">
+        <img src="images/product1.jpg" alt="منتج 1">
+        <div class="card-body">
+          <h3>جبة مشجرة بليزر اسود</h3>
+          <div class="price">500 جنيه</div>
+          <div class="actions">
+            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
+            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 2 -->
+      <div class="card fade-up">
+        <img src="images/product2.jpg" alt="منتج 2">
+        <div class="card-body">
+          <h3>دريس احمر مشجر مستورد</h3>
+          <div class="price">600 جنيه</div>
+          <div class="actions">
+            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
+            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- card 3 -->
+      <div class="card fade-up">
+        <img src="images/product3.jpg" alt="منتج 3">
+        <div class="card-body">
+          <h3>بلوزة كاجوال</h3>
+          <div class="price">350 جنيه</div>
+          <div class="actions">
+            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
+            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- big about (long description) -->
+  <div class="big-about fade-up" id="about">
+    <h2>من نحن — AH STORE</h2>
+    <p>
+      AH STORE هو متجر إلكتروني رائد في عالم الموضة، متخصص في تقديم أفضل تشكيلات الملابس النسائية والرجالية والأطفال.
+      نسعى دائمًا لاختيار منتجات ذات جودة عالية وتصاميم عصرية تلائم كل الأذواق. فريقنا يعمل مع موردين موثوقين
+      لضمان توصيل منتجات مطابقة للمواصفات، ونحن نفخر بسرعة الاستجابة وخدمة العملاء المتميزة.
+      <br><br>
+      رؤيتنا هي أن نصبح وجهة التسوق الأولى للعائلة المصرية، من خلال الجمع بين الأناقة والسعر المناسب وجودة المنتج.
+      نعمل باستمرار على تطوير تجربة الشراء، من عرض المنتجات، حتى الدفع والتوصيل وما بعد البيع، لضمان راحة ورضا كل عميل.
+    </p>
+  </div>
+
+  <!-- contact -->
+  <div class="contact-block" id="contact">
+    <a class="wa-btn" href="https://wa.me/201040513887" target="_blank">تواصل عبر واتساب — 01040513887</a>
+    <p style="margin-top:12px;color:#666;font-size:14px">أو اتصلي بنا على نفس الرقم للمساعدة أو الاستفسار.</p>
+  </div>
+
+  <!-- footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <h4>AH STORE</h4>
+        <p>أفضل تشكيلة أزياء بأفضل جودة وخدمة توصيل سريعة.</p>
+      </div>
+      <div>
+        <h4>روابط سريعة</h4>
+        <p><a style="color:#fff;text-decoration:none" href="#products">المنتجات</a> • <a style="color:#fff;text-decoration:none" href="#about">من نحن</a></p>
+      </div>
+      <div>
+        <h4>تابعينا</h4>
+        <div class="socials">
+          <a href="#" target="_blank">Instagram</a>
+          <a href="#" target="_blank">Facebook</a>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:18px">© 2025 AH STORE — جميع الحقوق محفوظة</p>
+  </footer>
+
+  <!-- bottom nav mobile -->
+  <nav class="bottom-nav" aria-hidden="false">
+    <a href="#">الرئيسية</a>
+    <a href="#products">التصنيفات</a>
+    <a class="center" href="#contact">س</a>
+    <a href="#">بحث</a>
+    <a href="#">حقيبة</a>
+  </nav>
+
+  <!-- small script for search placeholder + animations -->
+  <script>
+    // simple search filter (client-side) - searches product titles
+    const searchInput = document.getElementById('searchInput');
+    searchInput.addEventListener('input', function(){
+      const q = this.value.trim().toLowerCase();
+      document.querySelectorAll('.card').forEach(card=>{
+        const title = card.querySelector('h3').innerText.toLowerCase();
+        card.style.display = title.includes(q) ? 'block' : 'none';
+      });
+    });
+
+    // reveal animation on scroll
+    const observer = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting) e.target.classList.add('fade-up');
+      });
+    }, { threshold: 0.15 });
+
+    document.querySelectorAll('.card, .big-about, .contact-block, .cats-wrap .cat').forEach(el=>{
+      observer.observe(el);
+    });
+  </script>
 
 </body>
 </html>
