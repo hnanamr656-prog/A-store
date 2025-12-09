@@ -1,420 +1,301 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>AH STORE</title>
-<style>
-  :root{
-    --black:#0b0b0b;
-    --white:#ffffff;
-    --accent:#e6007e;
-    --muted:#f6f6f6;
-    --green:#25D366;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0;
-    font-family: "Segoe UI", Tahoma, Arial, "Noto Kufi Arabic", sans-serif;
-    background:var(--muted);
-    color:var(--black);
-    -webkit-font-smoothing:antialiased;
-    -moz-osx-font-smoothing:grayscale;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AH STORE</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f5f5;
+        }
+        header {
+            background: #000;
+            color: #fff;
+            text-align: center;
+            padding: 50px 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+        }
 
-  /* ---------- topbar (transparent over banner) ---------- */
-  .topbar{
-    position:fixed;
-    top:16px;
-    left:16px;
-    right:16px;
-    z-index:1200;
-    display:flex;
-    justify-content:space-between;
-    gap:12px;
-    align-items:center;
-    pointer-events:none; /* allow clicks to pass to buttons inside which enable pointer-events */
-  }
-  .topbar-inner{
-    pointer-events:auto;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-    width:100%;
-  }
-  .logo {
-    display:flex;
-    gap:12px;
-    align-items:center;
-  }
-  .logo img{
-    height:56px;
-    width:auto;
-    border-radius:8px;
-    object-fit:contain;
-    background:#fff;
-    padding:4px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.15);
-  }
-  .brand{ font-weight:800; color:var(--white); letter-spacing:1px; font-size:20px }
+        /* قسم تعريفي مع حركة */
+        .about-section {
+            background: #fff;
+            margin: 20px;
+            padding: 40px 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 30px;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s ease;
+        }
+        .about-section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about-section img {
+            width: 250px;
+            border-radius: 15px;
+            object-fit: cover;
+        }
+        .about-section .about-text {
+            max-width: 700px;
+            font-size: 18px;
+            color: #333;
+            line-height: 1.6;
+        }
 
-  .top-actions{ display:flex; gap:10px; align-items:center }
-  .icon-btn{
-    background: rgba(255,255,255,0.08);
-    border:0;
-    color:#fff;
-    padding:10px 12px;
-    border-radius:8px;
-    cursor:pointer;
-    font-size:18px;
-    box-shadow:0 6px 20px rgba(0,0,0,0.2);
-  }
+        /* أقسام */
+        .categories {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 30px 0;
+            gap: 20px;
+        }
+        .category {
+            width: 200px;
+            height: 200px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        .category img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .category span {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            background: rgba(0,0,0,0.6);
+            color: #fff;
+            font-size: 20px;
+            padding: 10px 0;
+        }
 
-  /* ---------- hero / banner ---------- */
-  .hero{
-    width:100%;
-    height:460px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('images/AH STORE.jpeg') center/cover no-repeat;
-    display:flex;
-    align-items:flex-end;
-    justify-content:flex-start;
-    padding:28px;
-    position:relative;
-    overflow:hidden;
-  }
-  .hero .overlay-card{
-    background: rgba(255,255,255,0.95);
-    color:var(--black);
-    border-radius:10px;
-    padding:18px 20px;
-    max-width:520px;
-    margin-left: auto;
-    text-align:right;
-    transform: translateY(30px);
-    animation: slideUp 0.9s ease forwards;
-    box-shadow:0 18px 40px rgba(0,0,0,0.12);
-  }
-  .hero h1{ margin:0; font-size:28px; letter-spacing:1px; }
-  .hero p{ margin:8px 0 0; color:#444; line-height:1.6 }
-
-  /* ---------- categories (circles) ---------- */
-  .cats-wrap{
-    display:flex;
-    gap:16px;
-    padding:18px 18px 6px 18px;
-    align-items:center;
-    overflow:auto;
-    margin-top:12px;
-  }
-  .cat{
-    flex:0 0 auto;
-    width:86px;
-    text-align:center;
-  }
-  .circle{
-    width:76px;height:76px;border-radius:50%;
-    overflow:hidden;border:2px solid #fff;
-    background:#fff;display:flex;align-items:center;justify-content:center;margin:auto;
-    box-shadow:0 6px 18px rgba(0,0,0,0.08);
-  }
-  .circle img{ width:100%;height:100%;object-fit:cover }
-  .cat p{ margin:8px 0 0;font-size:13px; color:#222 }
-
-  /* ---------- products grid ---------- */
-  .container{ max-width:1150px;margin:22px auto;padding:0 16px }
-  .section-header{ display:flex;justify-content:space-between;align-items:center;margin-bottom:12px }
-  .section-header h2{ margin:0;font-size:20px }
-  .grid{
-    display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
-    gap:18px;
-  }
-  .card{
-    background:#fff;border-radius:10px;overflow:hidden;border:1px solid #eee;
-    transition: transform .18s ease, box-shadow .18s ease;
-  }
-  .card:hover{ transform: translateY(-6px); box-shadow:0 12px 36px rgba(0,0,0,0.08) }
-  .card img{ width:100%; height:260px; object-fit:cover; display:block }
-  .card-body{ padding:12px }
-  .card-body h3{ margin:6px 0 0; font-size:16px }
-  .price{ color:var(--accent); font-weight:800; margin-top:8px }
-  .actions{ display:flex; gap:8px; margin-top:12px }
-  .btn{ flex:1; padding:10px; border-radius:8px; border:1px solid #ddd; text-align:center; text-decoration:none; font-weight:800 }
-  .btn-cta{ background:var(--black); color:#fff; border:0 }
-
-  /* ---------- big about (long description) ---------- */
-  .big-about{
-    margin:26px auto;
-    max-width:1050px;
-    background:linear-gradient(180deg,#fff,#fbfbfb);
-    padding:26px;border-radius:10px;border:1px solid #eee;
-    animation: fadeIn .9s ease both;
-  }
-  .big-about h2{ font-size:22px;margin:0 0 12px }
-  .big-about p{ line-height:1.9; color:#333; font-size:17px }
-
-  /* ---------- contact block ---------- */
-  .contact-block{ text-align:center; padding:26px; margin:18px auto; max-width:900px }
-  .wa-btn{ display:inline-block; background:var(--green); color:#fff; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:800; box-shadow:0 8px 28px rgba(37,211,102,0.12) }
-
-  /* ---------- footer ---------- */
-  footer{ background:var(--black); color:var(--white); padding:28px 16px; margin-top:26px }
-  .footer-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; max-width:1150px; margin:auto }
-  .footer-grid h4{ margin:0 0 8px }
-  .socials a{ color:#fff; text-decoration:none; margin-left:8px; }
-
-  /* ---------- bottom nav ---------- */
-  .bottom-nav{
-    position:fixed;left:12px;right:12px;bottom:12px;z-index:1400;display:flex;justify-content:space-between;align-items:center;padding:8px;background:#fff;border-radius:12px;border:1px solid #eee;
-    box-shadow:0 12px 40px rgba(0,0,0,0.06)
-  }
-  .bottom-nav a{ text-decoration:none;color:#222;font-weight:700;font-size:13px }
-  .bottom-center{ background:var(--accent); color:#fff; width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;transform:translateY(-12px);box-shadow:0 10px 30px rgba(230,0,126,0.16) }
-
-  /* ---------- utilities and animations ---------- */
-  @keyframes slideUp{ from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:none} }
-  @keyframes fadeIn{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
-  .fade-up{ animation: fadeIn .9s ease both }
-  .hidden{ display:none !important }
-
-  @media(min-width:900px){
-    .hero{ height:520px }
-    .card img{ height:320px }
-    .bottom-nav{ display:none }
-    .topbar{ top:24px; left:40px; right:40px }
-  }
-</style>
+        /* منتجات */
+        .filter-buttons {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-buttons button {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .filter-buttons button.active {
+            background: #25D366;
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+        .product-card {
+            background: #fff;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: 0.3s;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+        .product-card img {
+            width: 100%;
+            height: 280px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .product-card h3 {
+            margin: 15px 0 10px;
+            font-size: 20px;
+        }
+        .product-card p {
+            color: #444;
+            margin-bottom: 10px;
+        }
+        .product-card button {
+            background: #25D366;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .product-card button:hover {
+            background: #128C7E;
+        }
+    </style>
 </head>
 <body>
 
-  <!-- topbar (floating above banner) -->
-  <div class="topbar">
-    <div class="topbar-inner" style="width:100%; max-width:1200px; margin:auto">
-      <div class="logo" style="gap:12px">
-        <img src="images/AH STORE.jpeg" alt="AH STORE logo">
-        <div class="brand">AH STORE</div>
-      </div>
+    <!-- بانر -->
+    <header>
+        <h1>AH STORE</h1>
+    </header>
 
-      <div style="flex:1; text-align:center;">
-        <input id="searchInput" placeholder="ابحثي عن منتجات، موديلات، ألوان..." style="width:60%; max-width:640px; padding:10px 12px; border-radius:8px; border:0; outline:none;">
-      </div>
-
-      <div class="top-actions">
-        <button class="icon-btn" title="المفضلة">♡</button>
-        <button class="icon-btn" title="السلة">🛒</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- hero banner -->
-  <div class="hero" role="img" aria-label="banner">
-    <div style="flex:1"></div>
-    <div class="overlay-card" style="margin-left:0; text-align:right;">
-      <h1>أهلاً بك في AH STORE</h1>
-      <p>أحدث موديلات الموسم — جودة ممتازة — شحن سريع وخدمة عملاء على أعلى مستوى.</p>
-    </div>
-  </div>
-
-  <!-- categories row -->
-  <div class="cats-wrap" aria-hidden="false">
-    <div class="cat">
-      <div class="circle"><img src="images/cat-women.jpg" alt="نساء"></div>
-      <p>نساء</p>
-    </div>
-    <div class="cat">
-      <div class="circle"><img src="images/cat-men.jpg" alt="رجال"></div>
-      <p>رجال</p>
-    </div>
-    <div class="cat">
-      <div class="circle"><img src="images/cat-kids.jpg" alt="أطفال"></div>
-      <p>أطفال</p>
-    </div>
-    <div class="cat">
-      <div class="circle"><img src="images/cat-large.jpg" alt="مقاسات كبيرة"></div>
-      <p>مقاسات كبيرة</p>
-    </div>
-    <div class="cat">
-      <div class="circle"><img src="images/cat-home.jpg" alt="المنزل والعيشية"></div>
-      <p>المنزل</p>
-    </div>
-  </div>
-
-  <!-- products -->
-  <div class="container">
-    <div class="section-header">
-      <h2>منتجات مختارة</h2>
-      <a class="view-all" href="#products">عرض الكل</a>
-    </div>
-
-    <div class="grid" id="products">
-      <div class="card fade-up">
-        <img src="images/product1.jpg" alt="منتج 1">
-        <div class="card-body">
-          <h3>جبة مشجرة بليزر أسود</h3>
-          <div class="price">500 جنيه</div>
-          <div class="actions">
-            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
-            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
-          </div>
+    <!-- قسم تعريفي كبير مع حركة -->
+    <section class="about-section">
+        <img src="images/AH STORE.jpeg" alt="AH STORE" class="about-img">
+        <div class="about-text">
+            <h2>مرحباً بكم في AH STORE</h2>
+            <p>
+                AH STORE هو متجر متخصص في بيع الملابس الرجالي، الحريمي، وأطفال، بالإضافة إلى أدوات منزلية متنوعة.
+                نحن نقدم أفضل تجربة تسوق لعملائنا مع تشكيلة واسعة من المنتجات المميزة والعروض المستمرة. 
+                هدفنا الرئيسي هو راحتك ورضاك عن كل عملية شراء تقوم بها معنا. استمتع بتجربة تسوق سهلة، سريعة وآمنة مع AH STORE.
+            </p>
+            <p>
+                نقدم منتجات عالية الجودة مع تصميمات عصرية تناسب جميع الأذواق، ونسعى دائماً لتقديم خدمة عملاء ممتازة لضمان رضاك التام.
+            </p>
         </div>
-      </div>
+    </section>
 
-      <div class="card fade-up">
-        <img src="images/product2.jpg" alt="منتج 2">
-        <div class="card-body">
-          <h3>دريس أحمر مشجر مستورد</h3>
-          <div class="price">600 جنيه</div>
-          <div class="actions">
-            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
-            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
-          </div>
+    <!-- أقسام -->
+    <div class="categories">
+        <div class="category" onclick="filterProducts('all')">
+            <img src="images/all.jpg" alt="الكل">
+            <span>الكل</span>
         </div>
-      </div>
-
-      <div class="card fade-up">
-        <img src="images/product3.jpg" alt="منتج 3">
-        <div class="card-body">
-          <h3>بلوزة كاجوال</h3>
-          <div class="price">350 جنيه</div>
-          <div class="actions">
-            <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
-            <a class="btn btn-cta" href="#contact">اطلب الآن</a>
-          </div>
+        <div class="category" onclick="filterProducts('رجالي')">
+            <img src="images/رجالي.jpg" alt="رجالي">
+            <span>رجالي</span>
         </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- big about (long description) -->
-  <div class="big-about" id="about">
-    <h2>من نحن — AH STORE</h2>
-    <p>
-      AH STORE هو متجر إلكتروني رائد في عالم الموضة، متخصص في تقديم أفضل تشكيلات الملابس النسائية والرجالية والأطفال.
-      نسعى دائمًا لاختيار منتجات ذات جودة عالية وتصاميم عصرية تلائم كل الأذواق. فريقنا يعمل مع موردين موثوقين
-      لضمان توصيل منتجات مطابقة للمواصفات، ونحن نفخر بسرعة الاستجابة وخدمة العملاء المتميزة.
-      <br><br>
-      نؤمن في AH STORE أن كل قطعة ملابس يجب أن تحمل قيمة حقيقية: جودة خامة ممتازة، تفصيل أنيق، وسعر عادل.
-      نعمل على اختبار كل منتج قبل عرضه، ونتابع آراء العملاء باستمرار لتحسين اختياراتنا. رؤيتنا أن نصبح وجهة التسوق الأولى
-      للعائلة العربية، من خلال الجمع بين الأناقة والسعر المناسب وجودة المنتج.
-      <br><br>
-      كما نحرص على سهولة تجربة الشراء: صفحات المنتجات واضحة، وصف تفصيلي، طرق دفع مرنة، وشحن سريع وآمن.
-      دعم العملاء لدينا متاح دائمًا للرد على الأسئلة ومتابعة الطلبات من البداية حتى التوصيل.
-    </p>
-  </div>
-
-  <!-- contact -->
-  <div class="contact-block" id="contact">
-    <a class="wa-btn" href="https://wa.me/201040513887" target="_blank">تواصل عبر واتساب — 01040513887</a>
-    <p style="margin-top:12px;color:#666;font-size:14px">أو اتصلي بنا على نفس الرقم للمساعدة أو الاستفسار.</p>
-  </div>
-
-  <!-- footer -->
-  <footer>
-    <div class="footer-grid">
-      <div>
-        <h4>AH STORE</h4>
-        <p>أفضل تشكيلة أزياء بأفضل جودة وخدمة توصيل سريعة.</p>
-      </div>
-      <div>
-        <h4>روابط سريعة</h4>
-        <p><a style="color:#fff;text-decoration:none" href="#products">المنتجات</a> • <a style="color:#fff;text-decoration:none" href="#about">من نحن</a></p>
-      </div>
-      <div>
-        <h4>تابعينا</h4>
-        <div class="socials">
-          <a href="#" target="_blank">Instagram</a>
-          <a href="#" target="_blank">Facebook</a>
+        <div class="category" onclick="filterProducts('حريمي')">
+            <img src="images/حريمي.jpg" alt="حريمي">
+            <span>حريمي</span>
         </div>
-      </div>
     </div>
-    <p style="margin-top:18px">© 2025 AH STORE — جميع الحقوق محفوظة</p>
-  </footer>
 
-  <!-- bottom nav (mobile) -->
-  <nav class="bottom-nav" aria-hidden="false">
-    <a href="#">الرئيسية</a>
-    <a href="#products">التصنيفات</a>
-    <a class="bottom-center" href="#contact">اطلب</a>
-    <a href="#about">عن المتجر</a>
-    <a href="#">حقيبة</a>
-  </nav>
-
-  <!-- small script -->
-  <script>
-    // search filter simple
-    const searchInput = document.getElementById('searchInput');
-    searchInput.addEventListener('input', function(){
-      const q = this.value.trim().toLowerCase();
-      document.querySelectorAll('.card').forEach(card=>{
-        const title = card.querySelector('h3').innerText.toLowerCase();
-        card.style.display = title.includes(q) ? 'block' : 'none';
-      });
-    });
-
-    // reveal animation on scroll
-    const observer = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting) e.target.classList.add('fade-up');
-      });
-    }, { threshold: 0.15 });
-
-    document.querySelectorAll('.card, .big-about, .contact-block, .cats-wrap .cat').forEach(el=>{
-      observer.observe(el);
-    });
-  </script>
-
-</body>
-</html>
-
-   
-
-  <section class="products">
-    <div class="product-card">
-      <div class="product-card">
-  <img src="images/جيبه مشجره ببلوزه.jpg" alt="منتج">
-  <h3>جيبه مشجره ببلوزه اسود</h3>
-  <p>خامة قطن 100% — كل المقاسات</p>
-
-  <p class="price">السعر: 300 جنيه</p>
-
-  <a href="checkout.html" class="btn">اطلب الآن</a>
-</div>
-<div class="product-card">
-  <img src="images/دريس احمر مشجر.jpg" alt="منتج">
-  <h3>دريس احمر مشجر مستورد</h3>
-  <p>خامة قطن 100% — كل المقاسات</p>
-
-  <p class="price">السعر: 500 جنيه</p>
-
-  <a href="checkout.html" class="btn">اطلب الآن</a>
-</div>
-<div class="product-card">
-  <img src="images/دريس بني.jpg" alt="منتج">
-  <h3>دريس بني شيك مستورد</h3>
-  <p>خامة قطن 100% — كل المقاسات</p>
-
-  <p class="price">السعر: 450 جنيه</p>
-
-  <a href="checkout.html" class="btn">اطلب الآن</a>
-</div>
-<div class="product-card">
-  <img src="images/دريس رصاصي.jpg" alt="منتج">
-  <h3>دريس رصاصي مستورد</h3>
-  <p>خامة قطن 100% — كل المقاسات</p>
-
-  <p class="price">السعر: 400 جنيه</p>
-
-  <a href="checkout.html" class="btn">اطلب الآن</a>
-</div>
-      <img src="" alt="منتج">
-      <h3>اسم المنتج</h3>
-      <p>وصف مختصر للمنتج</p>
-      <a href="checkout.html" class="btn">اطلب الآن</a>
+    <!-- أزرار فلتر داخلي -->
+    <div class="filter-buttons">
+        <button class="active" onclick="filterProducts('all')">الكل</button>
+        <button onclick="filterProducts('رجالي')">رجالي</button>
+        <button onclick="filterProducts('حريمي')">حريمي</button>
     </div>
-  </section>
 
-  <script src="script.js"></script>
+    <!-- المنتجات -->
+    <div class="product-grid">
+
+        <!-- المنتج 1 -->
+        <div class="product-card" data-category="رجالي">
+            <img src="images/تيشرت رجالي.jpeg" alt="تيشرت رجالي">
+            <h3>تيشرت رجالي</h3>
+            <p>السعر: 450 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: تيشرت رجالي" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 2 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/جيبه مشجره ببلوزه.jpg" alt="جيبه مشجره ببلوزه">
+            <h3>جيبه مشجره ببلوزه</h3>
+            <p>السعر: 450 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: جيبه مشجره ببلوزه" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 3 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/دريس احمر مشجر.jpg" alt="دريس احمر مشجر">
+            <h3>دريس احمر مشجر</h3>
+            <p>السعر: 400 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس احمر مشجر" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 4 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/دريس بني.jpg" alt="دريس بني">
+            <h3>دريس بني</h3>
+            <p>السعر: 560 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس بني" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 5 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/دريس رصاصي.jpg" alt="دريس رصاصي">
+            <h3>دريس رصاصي</h3>
+            <p>السعر: 500 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس رصاصي" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 6 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/دريس.jpeg" alt="دريس">
+            <h3>دريس</h3>
+            <p>السعر: 550 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+        <!-- المنتج 7 -->
+        <div class="product-card" data-category="حريمي">
+            <img src="images/سوت قطعتين  طباعه وش وضهر.jpeg" alt="سوت قطعتين طباعه وش وضهر">
+            <h3>سوت قطعتين طباعه وش وضهر</h3>
+            <p>السعر: 450 جنيه</p>
+            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: سوت قطعتين طباعه وش وضهر" target="_blank">
+                <button>اطلب الآن</button>
+            </a>
+        </div>
+
+    </div>
+
+    <script>
+        // فلتر المنتجات
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-buttons button');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+
+        // حركة الصورة عند التمرير
+        window.addEventListener('scroll', function() {
+            const section = document.querySelector('.about-section');
+            const sectionTop = section.getBoundingClientRect().top;
+            const screenHeight = window.innerHeight;
+            if (sectionTop < screenHeight - 100) {
+                section.classList.add('visible');
+            }
+        });
+    </script>
+
 </body>
 </html>
