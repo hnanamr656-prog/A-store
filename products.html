@@ -13,7 +13,24 @@
         }
         h1 {
             text-align: center;
+            margin-bottom: 20px;
+        }
+        .filter-buttons {
+            text-align: center;
             margin-bottom: 30px;
+        }
+        .filter-buttons button {
+            background: #000;
+            color: #fff;
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .filter-buttons button.active {
+            background: #25D366;
         }
         .product-grid {
             display: grid;
@@ -63,10 +80,16 @@
 
     <h1>منتجاتنا</h1>
 
+    <div class="filter-buttons">
+        <button class="active" onclick="filterProducts('all')">الكل</button>
+        <button onclick="filterProducts('رجالي')">رجالي</button>
+        <button onclick="filterProducts('حريمي')">حريمي</button>
+    </div>
+
     <div class="product-grid">
 
         <!-- المنتج 1 -->
-        <div class="product-card">
+        <div class="product-card" data-category="رجالي">
             <img src="images/تيشرت رجالي.jpeg" alt="تيشرت رجالي">
             <h3>تيشرت رجالي</h3>
             <p>السعر: 450 جنيه</p>
@@ -76,7 +99,7 @@
         </div>
 
         <!-- المنتج 2 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/جيبه مشجره ببلوزه.jpg" alt="جيبه مشجره ببلوزه">
             <h3>جيبه مشجره ببلوزه</h3>
             <p>السعر: 450 جنيه</p>
@@ -86,7 +109,7 @@
         </div>
 
         <!-- المنتج 3 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/دريس احمر مشجر.jpg" alt="دريس احمر مشجر">
             <h3>دريس احمر مشجر</h3>
             <p>السعر: 400 جنيه</p>
@@ -96,7 +119,7 @@
         </div>
 
         <!-- المنتج 4 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/دريس بني.jpg" alt="دريس بني">
             <h3>دريس بني</h3>
             <p>السعر: 560 جنيه</p>
@@ -106,7 +129,7 @@
         </div>
 
         <!-- المنتج 5 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/دريس رصاصي.jpg" alt="دريس رصاصي">
             <h3>دريس رصاصي</h3>
             <p>السعر: 500 جنيه</p>
@@ -116,7 +139,7 @@
         </div>
 
         <!-- المنتج 6 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/دريس.jpeg" alt="دريس">
             <h3>دريس</h3>
             <p>السعر: 550 جنيه</p>
@@ -126,7 +149,7 @@
         </div>
 
         <!-- المنتج 7 -->
-        <div class="product-card">
+        <div class="product-card" data-category="حريمي">
             <img src="images/سوت قطعتين  طباعه وش وضهر.jpeg" alt="سوت قطعتين طباعه وش وضهر">
             <h3>سوت قطعتين طباعه وش وضهر</h3>
             <p>السعر: 450 جنيه</p>
@@ -136,6 +159,24 @@
         </div>
 
     </div>
+
+    <script>
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-buttons button');
+
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            products.forEach(product => {
+                if (category === 'all' || product.getAttribute('data-category') === category) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>
