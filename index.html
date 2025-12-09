@@ -1,301 +1,200 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AH STORE</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            background: #f5f5f5;
-        }
-        header {
-            background: #000;
-            color: #fff;
-            text-align: center;
-            padding: 50px 20px;
-        }
-        header h1 {
-            margin: 0;
-            font-size: 36px;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AH STORE</title>
+<style>
+body {font-family: Arial, sans-serif; margin:0; background:#f5f5f5;}
 
-        /* قسم تعريفي مع حركة */
-        .about-section {
-            background: #fff;
-            margin: 20px;
-            padding: 40px 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-            gap: 30px;
-            opacity: 0;
-            transform: translateY(50px);
-            transition: all 1s ease;
-        }
-        .about-section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .about-section img {
-            width: 250px;
-            border-radius: 15px;
-            object-fit: cover;
-        }
-        .about-section .about-text {
-            max-width: 700px;
-            font-size: 18px;
-            color: #333;
-            line-height: 1.6;
-        }
+/* بانر */
+header {
+    background: #000;
+    color: #fff;
+    text-align: center;
+    padding: 50px 20px;
+    overflow: hidden;
+    position: relative;
+}
+header h1 {
+    margin: 0;
+    font-size: 36px;
+    opacity: 0;
+    transform: scale(0.8);
+    animation: bannerAnimation 1s forwards 0.5s;
+}
+@keyframes bannerAnimation {
+    to {opacity:1; transform:scale(1);}
+}
 
-        /* أقسام */
-        .categories {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin: 30px 0;
-            gap: 20px;
-        }
-        .category {
-            width: 200px;
-            height: 200px;
-            border-radius: 15px;
-            overflow: hidden;
-            cursor: pointer;
-            position: relative;
-        }
-        .category img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .category span {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            text-align: center;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            font-size: 20px;
-            padding: 10px 0;
-        }
+/* قسم تعريفي */
+.about-section {
+    background: #fff;
+    margin: 20px;
+    padding: 40px 20px;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    opacity:0;
+    transform: translateY(50px);
+    transition: all 1s ease;
+}
+.about-section.visible {opacity:1; transform:translateY(0);}
+.about-section img {width:250px; border-radius:15px; object-fit:cover;}
+.about-section .about-text {max-width:700px; font-size:18px; color:#333; line-height:1.6;}
 
-        /* منتجات */
-        .filter-buttons {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .filter-buttons button {
-            background: #000;
-            color: #fff;
-            padding: 10px 20px;
-            margin: 5px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .filter-buttons button.active {
-            background: #25D366;
-        }
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            padding: 20px;
-        }
-        .product-card {
-            background: #fff;
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            text-align: center;
-            transition: 0.3s;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-        }
-        .product-card img {
-            width: 100%;
-            height: 280px;
-            object-fit: cover;
-            border-radius: 10px;
-        }
-        .product-card h3 {
-            margin: 15px 0 10px;
-            font-size: 20px;
-        }
-        .product-card p {
-            color: #444;
-            margin-bottom: 10px;
-        }
-        .product-card button {
-            background: #25D366;
-            color: #fff;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 16px;
-        }
-        .product-card button:hover {
-            background: #128C7E;
-        }
-    </style>
+/* أقسام */
+.categories {display:flex; justify-content:center; flex-wrap:wrap; margin:30px 0; gap:20px;}
+.category {
+    width:200px; height:200px; border-radius:15px; overflow:hidden; cursor:pointer; position:relative;
+    opacity:0; transform:translateY(50px); transition: all 0.7s ease;
+}
+.category.visible {opacity:1; transform:translateY(0);}
+.category img {width:100%; height:100%; object-fit:cover; transition: transform 0.5s ease;}
+.category:hover img {transform:scale(1.1);}
+.category span {position:absolute; bottom:0; width:100%; text-align:center; background: rgba(0,0,0,0.6); color:#fff; font-size:20px; padding:10px 0;}
+
+/* أزرار فلتر */
+.filter-buttons {text-align:center; margin-bottom:20px;}
+.filter-buttons button {
+    background:#000; color:#fff; padding:10px 20px; margin:5px; border:none; border-radius:10px; cursor:pointer; font-size:16px;
+}
+.filter-buttons button.active {background:#25D366;}
+
+/* منتجات */
+.product-grid {display:grid; grid-template-columns:repeat(auto-fit, minmax(250px, 1fr)); gap:20px; padding:20px;}
+.product-card {
+    background:#fff; padding:15px; border-radius:15px; box-shadow:0 4px 10px rgba(0,0,0,0.1); text-align:center;
+    transition:0.3s; opacity:0; transform:translateY(50px);
+}
+.product-card.visible {opacity:1; transform:translateY(0);}
+.product-card:nth-child(1) {transition-delay:0.1s;}
+.product-card:nth-child(2) {transition-delay:0.2s;}
+.product-card:nth-child(3) {transition-delay:0.3s;}
+.product-card:nth-child(4) {transition-delay:0.4s;}
+.product-card:nth-child(5) {transition-delay:0.5s;}
+.product-card:nth-child(6) {transition-delay:0.6s;}
+.product-card:nth-child(7) {transition-delay:0.7s;}
+.product-card:hover {transform:translateY(-5px);}
+.product-card img {width:100%; height:280px; object-fit:cover; border-radius:10px;}
+.product-card h3 {margin:15px 0 10px; font-size:20px;}
+.product-card p {color:#444; margin-bottom:10px;}
+.product-card button {background:#25D366; color:#fff; padding:10px 20px; border:none; border-radius:10px; cursor:pointer; font-size:16px;}
+.product-card button:hover {background:#128C7E;}
+</style>
 </head>
 <body>
 
-    <!-- بانر -->
-    <header>
-        <h1>AH STORE</h1>
-    </header>
+<header>
+    <h1>AH STORE</h1>
+</header>
 
-    <!-- قسم تعريفي كبير مع حركة -->
-    <section class="about-section">
-        <img src="images/AH STORE.jpeg" alt="AH STORE" class="about-img">
-        <div class="about-text">
-            <h2>مرحباً بكم في AH STORE</h2>
-            <p>
-                AH STORE هو متجر متخصص في بيع الملابس الرجالي، الحريمي، وأطفال، بالإضافة إلى أدوات منزلية متنوعة.
-                نحن نقدم أفضل تجربة تسوق لعملائنا مع تشكيلة واسعة من المنتجات المميزة والعروض المستمرة. 
-                هدفنا الرئيسي هو راحتك ورضاك عن كل عملية شراء تقوم بها معنا. استمتع بتجربة تسوق سهلة، سريعة وآمنة مع AH STORE.
-            </p>
-            <p>
-                نقدم منتجات عالية الجودة مع تصميمات عصرية تناسب جميع الأذواق، ونسعى دائماً لتقديم خدمة عملاء ممتازة لضمان رضاك التام.
-            </p>
-        </div>
-    </section>
-
-    <!-- أقسام -->
-    <div class="categories">
-        <div class="category" onclick="filterProducts('all')">
-            <img src="images/all.jpg" alt="الكل">
-            <span>الكل</span>
-        </div>
-        <div class="category" onclick="filterProducts('رجالي')">
-            <img src="images/رجالي.jpg" alt="رجالي">
-            <span>رجالي</span>
-        </div>
-        <div class="category" onclick="filterProducts('حريمي')">
-            <img src="images/حريمي.jpg" alt="حريمي">
-            <span>حريمي</span>
-        </div>
+<section class="about-section">
+    <img src="images/AH STORE.jpeg" alt="AH STORE">
+    <div class="about-text">
+        <h2>مرحباً بكم في AH STORE</h2>
+        <p>AH STORE هو متجر متخصص في بيع الملابس الرجالي، الحريمي، وأطفال، بالإضافة إلى أدوات منزلية متنوعة. نحن نقدم أفضل تجربة تسوق لعملائنا مع تشكيلة واسعة من المنتجات المميزة والعروض المستمرة. هدفنا الرئيسي هو راحتك ورضاك عن كل عملية شراء تقوم بها معنا. استمتع بتجربة تسوق سهلة، سريعة وآمنة مع AH STORE.</p>
+        <p>نقدم منتجات عالية الجودة مع تصميمات عصرية تناسب جميع الأذواق، ونسعى دائماً لتقديم خدمة عملاء ممتازة لضمان رضاك التام.</p>
     </div>
+</section>
 
-    <!-- أزرار فلتر داخلي -->
-    <div class="filter-buttons">
-        <button class="active" onclick="filterProducts('all')">الكل</button>
-        <button onclick="filterProducts('رجالي')">رجالي</button>
-        <button onclick="filterProducts('حريمي')">حريمي</button>
-    </div>
+<div class="categories">
+    <div class="category" onclick="filterProducts('all')"><img src="images/all.jpg" alt="الكل"><span>الكل</span></div>
+    <div class="category" onclick="filterProducts('رجالي')"><img src="images/رجالي.jpg" alt="رجالي"><span>رجالي</span></div>
+    <div class="category" onclick="filterProducts('حريمي')"><img src="images/حريمي.jpg" alt="حريمي"><span>حريمي</span></div>
+</div>
 
-    <!-- المنتجات -->
-    <div class="product-grid">
+<div class="filter-buttons">
+    <button class="active" onclick="filterProducts('all')">الكل</button>
+    <button onclick="filterProducts('رجالي')">رجالي</button>
+    <button onclick="filterProducts('حريمي')">حريمي</button>
+</div>
 
-        <!-- المنتج 1 -->
-        <div class="product-card" data-category="رجالي">
-            <img src="images/تيشرت رجالي.jpeg" alt="تيشرت رجالي">
-            <h3>تيشرت رجالي</h3>
-            <p>السعر: 450 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: تيشرت رجالي" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-grid">
 
-        <!-- المنتج 2 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/جيبه مشجره ببلوزه.jpg" alt="جيبه مشجره ببلوزه">
-            <h3>جيبه مشجره ببلوزه</h3>
-            <p>السعر: 450 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: جيبه مشجره ببلوزه" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="رجالي">
+<img src="images/تيشرت رجالي.jpeg" alt="تيشرت رجالي">
+<h3>تيشرت رجالي</h3>
+<p>السعر: 450 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: تيشرت رجالي" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-        <!-- المنتج 3 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/دريس احمر مشجر.jpg" alt="دريس احمر مشجر">
-            <h3>دريس احمر مشجر</h3>
-            <p>السعر: 400 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس احمر مشجر" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/جيبه مشجره ببلوزه.jpg" alt="جيبه مشجره ببلوزه">
+<h3>جيبه مشجره ببلوزه</h3>
+<p>السعر: 450 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: جيبه مشجره ببلوزه" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-        <!-- المنتج 4 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/دريس بني.jpg" alt="دريس بني">
-            <h3>دريس بني</h3>
-            <p>السعر: 560 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس بني" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/دريس احمر مشجر.jpg" alt="دريس احمر مشجر">
+<h3>دريس احمر مشجر</h3>
+<p>السعر: 400 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس احمر مشجر" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-        <!-- المنتج 5 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/دريس رصاصي.jpg" alt="دريس رصاصي">
-            <h3>دريس رصاصي</h3>
-            <p>السعر: 500 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس رصاصي" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/دريس بني.jpg" alt="دريس بني">
+<h3>دريس بني</h3>
+<p>السعر: 560 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس بني" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-        <!-- المنتج 6 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/دريس.jpeg" alt="دريس">
-            <h3>دريس</h3>
-            <p>السعر: 550 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/دريس رصاصي.jpg" alt="دريس رصاصي">
+<h3>دريس رصاصي</h3>
+<p>السعر: 500 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس رصاصي" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-        <!-- المنتج 7 -->
-        <div class="product-card" data-category="حريمي">
-            <img src="images/سوت قطعتين  طباعه وش وضهر.jpeg" alt="سوت قطعتين طباعه وش وضهر">
-            <h3>سوت قطعتين طباعه وش وضهر</h3>
-            <p>السعر: 450 جنيه</p>
-            <a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: سوت قطعتين طباعه وش وضهر" target="_blank">
-                <button>اطلب الآن</button>
-            </a>
-        </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/دريس.jpeg" alt="دريس">
+<h3>دريس</h3>
+<p>السعر: 550 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: دريس" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-    </div>
+<div class="product-card" data-category="حريمي">
+<img src="images/سوت قطعتين  طباعه وش وضهر.jpeg" alt="سوت قطعتين طباعه وش وضهر">
+<h3>سوت قطعتين طباعه وش وضهر</h3>
+<p>السعر: 450 جنيه</p>
+<a href="https://wa.me/201040513887?text=مرحبا! أريد طلب المنتج: سوت قطعتين طباعه وش وضهر" target="_blank"><button>اطلب الآن</button></a>
+</div>
 
-    <script>
-        // فلتر المنتجات
-        function filterProducts(category) {
-            const products = document.querySelectorAll('.product-card');
-            const buttons = document.querySelectorAll('.filter-buttons button');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+</div>
 
-            products.forEach(product => {
-                if (category === 'all' || product.getAttribute('data-category') === category) {
-                    product.style.display = 'block';
-                } else {
-                    product.style.display = 'none';
-                }
-            });
-        }
+<script>
+// فلتر المنتجات
+function filterProducts(category) {
+    const products = document.querySelectorAll('.product-card');
+    const buttons = document.querySelectorAll('.filter-buttons button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    event.target.classList.add('active');
 
-        // حركة الصورة عند التمرير
-        window.addEventListener('scroll', function() {
-            const section = document.querySelector('.about-section');
-            const sectionTop = section.getBoundingClientRect().top;
-            const screenHeight = window.innerHeight;
-            if (sectionTop < screenHeight - 100) {
-                section.classList.add('visible');
-            }
-        });
-    </script>
+    products.forEach(product => {
+        if(category==='all' || product.getAttribute('data-category')===category){
+            product.style.display='block';
+        } else { product.style.display='none'; }
+    });
+}
+
+// حركة العناصر عند التمرير
+window.addEventListener('scroll', function() {
+    const about = document.querySelector('.about-section');
+    const categories = document.querySelectorAll('.category');
+    const products = document.querySelectorAll('.product-card');
+    const trigger = window.innerHeight - 100;
+
+    if(about.getBoundingClientRect().top<trigger) about.classList.add('visible');
+    categories.forEach(cat=>{if(cat.getBoundingClientRect().top<trigger) cat.classList.add('visible');});
+    products.forEach(prod=>{if(prod.getBoundingClientRect().top<trigger) prod.classList.add('visible');});
+});
+</script>
 
 </body>
 </html>
+
