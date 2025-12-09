@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -8,261 +7,260 @@
 
     <style>
         body {
+            font-family: "Tahoma", sans-serif;
+            background: #fff6fa;
             margin: 0;
-            font-family: Arial, sans-serif;
-            background: #ffffff;
+            padding: 0;
         }
 
-        /* ====== الهيدر ====== */
+        /* ===================== هيدر ===================== */
         header {
-            background: #ff3366;
-            padding: 15px;
+            background: linear-gradient(135deg, #ff99c8, #ffb3d9);
+            padding: 25px;
             text-align: center;
-            color: #fff;
-            font-size: 24px;
+            color: white;
+            font-size: 28px;
             font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
-        /* ====== السلايدر ====== */
-        .slider {
-            width: 100%;
-            max-height: 350px;
-            overflow: hidden;
-            position: relative;
+        /* ===================== سلايدر ===================== */
+        .about-section {
+            background: #ffe6f0;
+            margin: 25px;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
         }
-        .slide-img {
+
+        .about-slider {
+            max-width: 450px;
+            margin: auto;
+            overflow: hidden;
+            border-radius: 20px;
+        }
+
+        .about-slide {
             width: 100%;
             display: none;
         }
-        .slide-img.active {
+
+        .about-slide.active {
             display: block;
             animation: fade 2s ease-in-out;
         }
+
         @keyframes fade {
-            from {opacity: 0.3;}
-            to {opacity: 1;}
+            from { opacity: 0.3; }
+            to   { opacity: 1; }
         }
 
-        /* ====== تعريف الشركة ====== */
-        .about-section {
-            padding: 25px;
-            background: #fff4f7;
-            border-radius: 20px;
-            margin: 20px;
-            text-align: center;
-        }
-        .about-section img {
-            width: 90%;
-            border-radius: 20px;
-            margin-bottom: 20px;
-        }
-        .about-section h2 {
-            font-size: 28px;
-            color: #ff3366;
-            margin-bottom: 10px;
-        }
-        .about-section p {
-            font-size: 18px;
-            line-height: 1.8;
+        .about-text h2 {
+            color: #ff3e78;
+            font-size: 30px;
+            margin-top: 15px;
         }
 
-        /* ====== الأقسام ====== */
-        .categories {
-            padding: 20px;
-            text-align: center;
-        }
-        .categories h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        .cat-box {
-            display: flex;
-            justify-content: space-around;
-            text-align: center;
-            margin-top: 10px;
-        }
-        .cat-box a {
-            width: 30%;
-            padding: 10px;
-            background: #ffe0ea;
-            border-radius: 15px;
-            text-decoration: none;
-            color: #333;
-            font-size: 18px;
+        .about-text p {
+            font-size: 19px;
+            line-height: 2;
+            margin: 10px;
+            color: #222;
             font-weight: bold;
         }
 
-        /* ====== المنتجات ====== */
+        /* ===================== المنتجات ===================== */
         .products {
             padding: 20px;
         }
-        .products h3 {
-            font-size: 24px;
-            margin-bottom: 15px;
+
+        .products h2 {
             text-align: center;
+            font-size: 26px;
+            margin-bottom: 20px;
+            color: #ff3e78;
         }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 15px;
+        }
+
         .product-card {
-            background: #fff;
+            background: #ffffff;
             border-radius: 15px;
             padding: 10px;
-            margin-bottom: 20px;
-            box-shadow: 0 0 5px #ccc;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: .4s;
+            opacity: 0;
+            transform: translateY(50px);
         }
+
+        .product-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         .product-card img {
             width: 100%;
             border-radius: 15px;
-        }
-        .product-card h4 {
-            font-size: 20px;
-            margin: 10px 0 5px;
-        }
-        .price {
-            font-size: 20px;
-            color: #ff3366;
-            font-weight: bold;
-        }
-        .btn-whatsapp {
-            display: block;
-            width: 100%;
-            background: #25d366;
-            color: white;
-            padding: 12px;
-            text-align: center;
-            margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            text-decoration: none;
-            border-radius: 10px;
+            height: 200px;
+            object-fit: cover;
         }
 
-        /* ====== الفوتر ====== */
-        footer {
-            background: #ff3366;
+        .product-card h3 {
+            font-size: 18px;
+            margin-top: 10px;
+        }
+
+        .price {
+            color: #ff1e63;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .whatsapp-btn {
+            display: block;
+            background: #25D366;
+            padding: 10px;
+            border-radius: 10px;
             color: white;
-            padding: 15px;
-            font-size: 16px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* ===================== تواصل واتساب ===================== */
+        .contact-box {
+            background: #ffd6e8;
+            margin: 30px;
+            padding: 20px;
+            border-radius: 20px;
             text-align: center;
-            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .contact-box a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 12px 20px;
+            background: #25D366;
+            color: white;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 19px;
+        }
+
+        /* ===================== الفوتر ===================== */
+        footer {
+            background: #ff99c8;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            font-size: 22px;
+            font-weight: bold;
         }
     </style>
 </head>
 
 <body>
 
-    <!-- ==================== الهيدر ==================== -->
-    <header>AH STORE</header>
+<header>AH STORE</header>
 
-    <!-- ==================== السلايدر ==================== -->
-    <div class="slider">
-        <img src="AH STORE.jpeg" class="slide-img active">
-        <img src="AH STORE.jpeg" class="slide-img">
-        <img src="AH STORE.jpeg" class="slide-img">
+<!-- ===================== قسم التعريف ===================== -->
+<section class="about-section">
+    <div class="about-slider">
+        <img src="AH STORE.jpeg" class="about-slide active">
+        <img src="AH STORE.jpeg" class="about-slide">
+        <img src="AH STORE.jpeg" class="about-slide">
     </div>
 
-    <!-- ==================== تعريف الشركة ==================== -->
-    <section class="about-section">
-        <img src="AH STORE.jpeg" alt="">
+    <div class="about-text">
         <h2>مرحباً بكم في AH STORE</h2>
         <p>
-            AH STORE هو متجر متخصص في بيع الملابس الرجالي والحريمي والأطفالي،
-            وأدوات منزلية مختارة بعناية لضمان أعلى جودة وأفضل سعر.  
-            نهدف لتقديم تجربة تسوّق سهلة وسريعة مع دعم كامل للمسوقين وخدمة عملاء ممتازة.
+            نقدم أفضل تشكيلات الملابس الرجالي والحريمي والأطفالي  
+            مع منتجات منزلية مميزة بأسعار منافسة.  
+            هدفنا هو توفير جودة ممتازة… وتوصيل سريع… وتجربة تسوق سهلة.
         </p>
-    </section>
+        <p>
+            نعمل مع فريق كبير من المسوقين لتوفير دعم كامل  
+            وخدمة عملاء على مدار اليوم.
+        </p>
+    </div>
+</section>
 
-    <!-- ==================== الأقسام ==================== -->
-    <section class="categories">
-        <h3>الأقسام</h3>
-        <div class="cat-box">
-            <a href="#products-men">رجالي</a>
-            <a href="#products-women">حريمي</a>
-        </div>
-    </section>
+<!-- ===================== قسم المنتجات ===================== -->
+<section class="products">
+    <h2>منتجاتنا</h2>
 
-    <!-- ==================== منتجات رجالي ==================== -->
-    <section class="products" id="products-men">
-        <h3>منتجات رجالي</h3>
+    <div class="product-grid">
 
+        <!-- منتج 1 -->
         <div class="product-card">
             <img src="تيشرت رجالي.jpeg">
-            <h4>تيشرت رجالي</h4>
+            <h3>تيشرت رجالي</h3>
             <p class="price">450 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب تيشرت رجالي">اطلب الآن</a>
+            <a class="whatsapp-btn" href="https://wa.me/201040513887">اطلب الآن</a>
         </div>
 
-    </section>
-
-    <!-- ==================== منتجات حريمي ==================== -->
-    <section class="products" id="products-women">
-        <h3>منتجات حريمي</h3>
-
+        <!-- منتج 2 -->
         <div class="product-card">
             <img src="جيبه مشجره ببلوزه.jpg">
-            <h4>جيبة مشجرة ببلوزة</h4>
+            <h3>جيبة مشجرة ببلوزة</h3>
             <p class="price">450 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب جيبه مشجره ببلوزه">اطلب الآن</a>
+            <a class="whatsapp-btn" href="https://wa.me/201040513887">اطلب الآن</a>
         </div>
 
-        <div class="product-card">
-            <img src="دريس احمر مشجر.jpg">
-            <h4>دريس أحمر مشجر</h4>
-            <p class="price">400 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب دريس احمر مشجر">اطلب الآن</a>
-        </div>
+        <!-- باقي المنتجات نفس الشكل -->
+    </div>
+</section>
 
-        <div class="product-card">
-            <img src="دريس بني.jpg">
-            <h4>دريس بني</h4>
-            <p class="price">560 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب دريس بني">اطلب الآن</a>
-        </div>
+<!-- ===================== تواصل واتساب ===================== -->
+<div class="contact-box">
+    للتواصل السريع  
+    <br>
+    <a href="https://wa.me/201040513887">تواصل معنا على واتساب</a>
+</div>
 
-        <div class="product-card">
-            <img src="دريس رصاصي.jpg">
-            <h4>دريس رصاصي</h4>
-            <p class="price">500 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب دريس رصاصي">اطلب الآن</a>
-        </div>
+<!-- ===================== الفوتر ===================== -->
+<footer>
+    AH STORE © جميع الحقوق محفوظة  
+</footer>
 
-        <div class="product-card">
-            <img src="دريس.jpeg">
-            <h4>دريس</h4>
-            <p class="price">550 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب دريس">اطلب الآن</a>
-        </div>
+<script>
+/* سلايدر */
+let slideIndex = 0;
+const slides = document.querySelectorAll(".about-slide");
 
-        <div class="product-card">
-            <img src="سوت قطعتين طباعه وش وضهر.jpeg">
-            <h4>سوت قطعتين</h4>
-            <p class="price">450 جنيه</p>
-            <a class="btn-whatsapp" href="https://wa.me/201040513887?text=عايز اطلب سوت قطعتين طباعه وش وضهر">اطلب الآن</a>
-        </div>
+function showSlides() {
+    slides.forEach(s => s.classList.remove("active"));
+    slideIndex++;
+    if (slideIndex > slides.length) { slideIndex = 1; }
+    slides[slideIndex - 1].classList.add("active");
+    setTimeout(showSlides, 2500);
+}
+showSlides();
 
-    </section>
+/* حركة ظهور المنتجات */
+window.addEventListener("scroll", () => {
+    const cards = document.querySelectorAll(".product-card");
+    const trigger = window.innerHeight - 100;
 
-    <!-- ==================== الفوتر ==================== -->
-    <footer>
-        جميع الحقوق محفوظة © AH STORE  
-    </footer>
-
-    <!-- ========= سكرول السلايدر ========= -->
-    <script>
-        let slideIndex = 0;
-        const slides = document.querySelectorAll(".slide-img");
-
-        function showSlides() {
-            slides.forEach(s => s.classList.remove("active"));
-            slideIndex++;
-            if (slideIndex > slides.length) slideIndex = 1;
-            slides[slideIndex - 1].classList.add("active");
-            setTimeout(showSlides, 2500);
+    cards.forEach(card => {
+        if (card.getBoundingClientRect().top < trigger) {
+            card.classList.add("visible");
         }
-
-        showSlides();
-    </script>
+    });
+});
+</script>
 
 </body>
 </html>
-
 
 
