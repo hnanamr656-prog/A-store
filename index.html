@@ -1,265 +1,258 @@
 
-
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>AH STORE</title>
-
 <style>
   :root{
     --black:#0b0b0b;
     --white:#ffffff;
-    --accent:#e6007e; /* accent color if needed */
-    --muted:#f4f4f4;
+    --accent:#e6007e;
+    --muted:#f6f6f6;
     --green:#25D366;
   }
-
   *{box-sizing:border-box}
   body{
     margin:0;
     font-family: "Segoe UI", Tahoma, Arial, "Noto Kufi Arabic", sans-serif;
-    background:var(--white);
+    background:var(--muted);
     color:var(--black);
     -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
   }
 
-  /* ===== header (top bar) ===== */
+  /* ---------- topbar (transparent over banner) ---------- */
   .topbar{
-    position:sticky;
-    top:0;
+    position:fixed;
+    top:16px;
+    left:16px;
+    right:16px;
     z-index:1200;
-    background:linear-gradient(0deg, rgba(0,0,0,0.95), rgba(0,0,0,0.95));
-    color:var(--white);
+    display:flex;
+    justify-content:space-between;
+    gap:12px;
+    align-items:center;
+    pointer-events:none; /* allow clicks to pass to buttons inside which enable pointer-events */
+  }
+  .topbar-inner{
+    pointer-events:auto;
     display:flex;
     align-items:center;
     justify-content:space-between;
-    gap:12px;
-    padding:10px 14px;
-    box-shadow:0 2px 8px rgba(0,0,0,0.2);
-  }
-  .topbar .left, .topbar .right{display:flex;align-items:center;gap:12px}
-  .logo{
-    display:flex;
-    align-items:center;
     gap:10px;
+    width:100%;
+  }
+  .logo {
+    display:flex;
+    gap:12px;
+    align-items:center;
   }
   .logo img{
-    height:44px;
+    height:56px;
     width:auto;
-    border-radius:6px;
+    border-radius:8px;
     object-fit:contain;
     background:#fff;
-    padding:2px;
+    padding:4px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.15);
   }
-  .brand {font-weight:700; font-size:18px; letter-spacing:1px}
-  .search {
-    flex:1;
-    display:flex;
-    align-items:center;
-    gap:8px;
-    max-width:640px;
-    margin-inline:12px;
-  }
-  .search input{
-    width:100%;
+  .brand{ font-weight:800; color:var(--white); letter-spacing:1px; font-size:20px }
+
+  .top-actions{ display:flex; gap:10px; align-items:center }
+  .icon-btn{
+    background: rgba(255,255,255,0.08);
+    border:0;
+    color:#fff;
     padding:10px 12px;
     border-radius:8px;
-    border:0;
-    outline:none;
-    font-size:15px;
-  }
-
-  .icon-btn{
-    background:transparent;
-    border:0;
-    color:var(--white);
-    font-size:20px;
     cursor:pointer;
+    font-size:18px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.2);
   }
 
-  /* ===== hero/banner ===== */
+  /* ---------- hero / banner ---------- */
   .hero{
     width:100%;
-    height:420px;
-    background: url('images/AH STORE.jpeg') center/cover no-repeat;
+    height:460px;
+    background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.15)), url('images/AH STORE.jpeg') center/cover no-repeat;
     display:flex;
     align-items:flex-end;
-    justify-content:flex-end;
-    padding:18px;
+    justify-content:flex-start;
+    padding:28px;
+    position:relative;
+    overflow:hidden;
   }
-  .hero .banner-caption{
-    background:rgba(255,255,255,0.9);
+  .hero .overlay-card{
+    background: rgba(255,255,255,0.95);
     color:var(--black);
-    padding:14px 16px;
-    border-radius:8px;
-    max-width:320px;
+    border-radius:10px;
+    padding:18px 20px;
+    max-width:520px;
+    margin-left: auto;
     text-align:right;
-    transform: translateY(10px);
-    animation: fadeUp .9s ease both;
+    transform: translateY(30px);
+    animation: slideUp 0.9s ease forwards;
+    box-shadow:0 18px 40px rgba(0,0,0,0.12);
   }
-  .banner-caption h1{margin:0;font-size:20px}
-  .banner-caption p{margin:6px 0 0;color:#333;font-size:14px}
+  .hero h1{ margin:0; font-size:28px; letter-spacing:1px; }
+  .hero p{ margin:8px 0 0; color:#444; line-height:1.6 }
 
-  /* ===== categories row (circular icons) ===== */
+  /* ---------- categories (circles) ---------- */
   .cats-wrap{
     display:flex;
-    gap:18px;
-    padding:18px;
-    overflow:auto;
+    gap:16px;
+    padding:18px 18px 6px 18px;
     align-items:center;
-    background:var(--white);
+    overflow:auto;
+    margin-top:12px;
   }
   .cat{
-    min-width:92px;
-    text-align:center;
     flex:0 0 auto;
+    width:86px;
+    text-align:center;
   }
-  .cat .circle{
+  .circle{
     width:76px;height:76px;border-radius:50%;
-    background:#fff;border:1px solid #eee;
-    display:flex;align-items:center;justify-content:center;
-    overflow:hidden;margin:auto;
+    overflow:hidden;border:2px solid #fff;
+    background:#fff;display:flex;align-items:center;justify-content:center;margin:auto;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
   }
-  .cat img{width:100%;height:100%;object-fit:cover}
-  .cat p{margin:8px 0 0;font-size:13px}
+  .circle img{ width:100%;height:100%;object-fit:cover }
+  .cat p{ margin:8px 0 0;font-size:13px; color:#222 }
 
-  /* ===== featured sections (grid) ===== */
-  .sections{padding:18px}
-  .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}
-  .section-title h2{margin:0;font-size:20px}
-  .view-all{color:#666;font-size:14px;text-decoration:none}
-
+  /* ---------- products grid ---------- */
+  .container{ max-width:1150px;margin:22px auto;padding:0 16px }
+  .section-header{ display:flex;justify-content:space-between;align-items:center;margin-bottom:12px }
+  .section-header h2{ margin:0;font-size:20px }
   .grid{
     display:grid;
-    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
-    gap:16px;
+    grid-template-columns: repeat(auto-fit,minmax(220px,1fr));
+    gap:18px;
   }
   .card{
-    background:#fff;border-radius:8px;border:1px solid #eee;overflow:hidden;
+    background:#fff;border-radius:10px;overflow:hidden;border:1px solid #eee;
     transition: transform .18s ease, box-shadow .18s ease;
   }
-  .card:hover{ transform: translateY(-6px); box-shadow: 0 10px 25px rgba(0,0,0,0.08); }
-  .card img{width:100%;height:230px;object-fit:cover;display:block}
-  .card-body{padding:12px}
-  .card-body h3{margin:4px 0;font-size:16px}
-  .price{color:var(--accent);font-weight:700;margin-top:6px}
-  .actions{display:flex;gap:8px;margin-top:10px}
-  .btn{
-    flex:1;padding:10px;border-radius:6px;border:1px solid #ddd;background:#fff;color:var(--black);cursor:pointer;text-decoration:none;text-align:center;font-weight:700;
-  }
-  .btn-cta{background:var(--black);color:#fff;border:0}
+  .card:hover{ transform: translateY(-6px); box-shadow:0 12px 36px rgba(0,0,0,0.08) }
+  .card img{ width:100%; height:260px; object-fit:cover; display:block }
+  .card-body{ padding:12px }
+  .card-body h3{ margin:6px 0 0; font-size:16px }
+  .price{ color:var(--accent); font-weight:800; margin-top:8px }
+  .actions{ display:flex; gap:8px; margin-top:12px }
+  .btn{ flex:1; padding:10px; border-radius:8px; border:1px solid #ddd; text-align:center; text-decoration:none; font-weight:800 }
+  .btn-cta{ background:var(--black); color:#fff; border:0 }
 
-  /* ===== contact & big about ===== */
+  /* ---------- big about (long description) ---------- */
   .big-about{
-    padding:30px;
+    margin:26px auto;
+    max-width:1050px;
     background:linear-gradient(180deg,#fff,#fbfbfb);
-    max-width:1100px;margin:30px auto;border-radius:10px;border:1px solid #eee;
+    padding:26px;border-radius:10px;border:1px solid #eee;
+    animation: fadeIn .9s ease both;
   }
-  .big-about h2{font-size:24px;margin:0 0 12px}
-  .big-about p{font-size:17px;line-height:1.9;color:#333;margin:0}
+  .big-about h2{ font-size:22px;margin:0 0 12px }
+  .big-about p{ line-height:1.9; color:#333; font-size:17px }
 
-  /* ===== contact block ===== */
-  .contact-block{
-    text-align:center;padding:28px;margin:18px auto;max-width:900px;
-  }
-  .wa-btn{
-    display:inline-block;background:var(--green);color:#fff;padding:12px 18px;border-radius:8px;text-decoration:none;font-weight:700;
-    box-shadow:0 6px 20px rgba(37,211,102,0.18);
-  }
+  /* ---------- contact block ---------- */
+  .contact-block{ text-align:center; padding:26px; margin:18px auto; max-width:900px }
+  .wa-btn{ display:inline-block; background:var(--green); color:#fff; padding:12px 18px; border-radius:8px; text-decoration:none; font-weight:800; box-shadow:0 8px 28px rgba(37,211,102,0.12) }
 
-  /* ===== footer ===== */
-  footer{
-    background:var(--black);color:var(--white);padding:28px 18px;margin-top:28px;
-  }
-  .footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;max-width:1100px;margin:auto}
-  .footer-grid h4{margin:0 0 8px;font-size:16px}
-  .socials a{display:inline-block;margin-left:8px;color:#fff;text-decoration:none}
+  /* ---------- footer ---------- */
+  footer{ background:var(--black); color:var(--white); padding:28px 16px; margin-top:26px }
+  .footer-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(200px,1fr)); gap:18px; max-width:1150px; margin:auto }
+  .footer-grid h4{ margin:0 0 8px }
+  .socials a{ color:#fff; text-decoration:none; margin-left:8px; }
 
-  /* ===== bottom nav (mobile) ===== */
+  /* ---------- bottom nav ---------- */
   .bottom-nav{
-    position:fixed;left:0;right:0;bottom:0;z-index:1400;
-    display:flex;justify-content:space-around;align-items:center;padding:8px 6px;background:#fff;border-top:1px solid #eee;
+    position:fixed;left:12px;right:12px;bottom:12px;z-index:1400;display:flex;justify-content:space-between;align-items:center;padding:8px;background:#fff;border-radius:12px;border:1px solid #eee;
+    box-shadow:0 12px 40px rgba(0,0,0,0.06)
   }
-  .bottom-nav a{flex:1;text-align:center;color:#111;text-decoration:none;font-size:13px}
-  .bottom-nav .center{
-    transform:translateY(-10px);
-    background:var(--accent);color:#fff;border-radius:50%;width:56px;height:56px;display:flex;align-items:center;justify-content:center;font-weight:700;
-    box-shadow:0 8px 25px rgba(230,0,126,0.18);
-  }
+  .bottom-nav a{ text-decoration:none;color:#222;font-weight:700;font-size:13px }
+  .bottom-center{ background:var(--accent); color:#fff; width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;transform:translateY(-12px);box-shadow:0 10px 30px rgba(230,0,126,0.16) }
 
-  /* responsive tweaks */
+  /* ---------- utilities and animations ---------- */
+  @keyframes slideUp{ from{opacity:0; transform:translateY(24px)} to{opacity:1; transform:none} }
+  @keyframes fadeIn{ from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+  .fade-up{ animation: fadeIn .9s ease both }
+  .hidden{ display:none !important }
+
   @media(min-width:900px){
-    .hero{height:520px}
-    .card img{height:320px}
-    .bottom-nav{display:none}
+    .hero{ height:520px }
+    .card img{ height:320px }
+    .bottom-nav{ display:none }
+    .topbar{ top:24px; left:40px; right:40px }
   }
-
-  /* animations */
-  @keyframes fadeUp { from{opacity:0; transform:translateY(20px)} to{opacity:1; transform:none} }
-  .fade-up{animation:fadeUp .8s ease both}
 </style>
 </head>
 <body>
 
-  <!-- topbar -->
-  <div class="topbar fade-up">
-    <div class="left">
-      <div class="logo">
-        <!-- use the banner small version or logo -->
+  <!-- topbar (floating above banner) -->
+  <div class="topbar">
+    <div class="topbar-inner" style="width:100%; max-width:1200px; margin:auto">
+      <div class="logo" style="gap:12px">
         <img src="images/AH STORE.jpeg" alt="AH STORE logo">
         <div class="brand">AH STORE</div>
       </div>
-    </div>
 
-    <div class="search" role="search">
-      <input id="searchInput" placeholder="ابحثي عن منتجات، موديلات، ألوان..." aria-label="search">
-    </div>
+      <div style="flex:1; text-align:center;">
+        <input id="searchInput" placeholder="ابحثي عن منتجات، موديلات، ألوان..." style="width:60%; max-width:640px; padding:10px 12px; border-radius:8px; border:0; outline:none;">
+      </div>
 
-    <div class="right">
-      <button class="icon-btn" aria-label="favorite">♡</button>
-      <button class="icon-btn" aria-label="cart">🛒</button>
+      <div class="top-actions">
+        <button class="icon-btn" title="المفضلة">♡</button>
+        <button class="icon-btn" title="السلة">🛒</button>
+      </div>
     </div>
   </div>
 
   <!-- hero banner -->
-  <div class="hero" role="img" aria-label="banner"></div>
+  <div class="hero" role="img" aria-label="banner">
+    <div style="flex:1"></div>
+    <div class="overlay-card" style="margin-left:0; text-align:right;">
+      <h1>أهلاً بك في AH STORE</h1>
+      <p>أحدث موديلات الموسم — جودة ممتازة — شحن سريع وخدمة عملاء على أعلى مستوى.</p>
+    </div>
+  </div>
 
-  <!-- categories (circular icons) -->
+  <!-- categories row -->
   <div class="cats-wrap" aria-hidden="false">
-    <div class="cat" tabindex="0">
+    <div class="cat">
       <div class="circle"><img src="images/cat-women.jpg" alt="نساء"></div>
       <p>نساء</p>
     </div>
-    <div class="cat" tabindex="0">
+    <div class="cat">
       <div class="circle"><img src="images/cat-men.jpg" alt="رجال"></div>
       <p>رجال</p>
     </div>
-    <div class="cat" tabindex="0">
+    <div class="cat">
       <div class="circle"><img src="images/cat-kids.jpg" alt="أطفال"></div>
       <p>أطفال</p>
     </div>
-    <div class="cat" tabindex="0">
+    <div class="cat">
       <div class="circle"><img src="images/cat-large.jpg" alt="مقاسات كبيرة"></div>
       <p>مقاسات كبيرة</p>
     </div>
-    <!-- add more categories if needed -->
+    <div class="cat">
+      <div class="circle"><img src="images/cat-home.jpg" alt="المنزل والعيشية"></div>
+      <p>المنزل</p>
+    </div>
   </div>
 
-  <!-- featured / products -->
-  <div class="sections">
-    <div class="section-title">
+  <!-- products -->
+  <div class="container">
+    <div class="section-header">
       <h2>منتجات مختارة</h2>
       <a class="view-all" href="#products">عرض الكل</a>
     </div>
 
     <div class="grid" id="products">
-      <!-- card 1 -->
       <div class="card fade-up">
         <img src="images/product1.jpg" alt="منتج 1">
         <div class="card-body">
-          <h3>جبة مشجرة بليزر اسود</h3>
+          <h3>جبة مشجرة بليزر أسود</h3>
           <div class="price">500 جنيه</div>
           <div class="actions">
             <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
@@ -268,11 +261,10 @@
         </div>
       </div>
 
-      <!-- card 2 -->
       <div class="card fade-up">
         <img src="images/product2.jpg" alt="منتج 2">
         <div class="card-body">
-          <h3>دريس احمر مشجر مستورد</h3>
+          <h3>دريس أحمر مشجر مستورد</h3>
           <div class="price">600 جنيه</div>
           <div class="actions">
             <a class="btn" href="https://wa.me/201040513887" target="_blank">اطلب عبر واتساب</a>
@@ -281,7 +273,6 @@
         </div>
       </div>
 
-      <!-- card 3 -->
       <div class="card fade-up">
         <img src="images/product3.jpg" alt="منتج 3">
         <div class="card-body">
@@ -297,15 +288,19 @@
   </div>
 
   <!-- big about (long description) -->
-  <div class="big-about fade-up" id="about">
+  <div class="big-about" id="about">
     <h2>من نحن — AH STORE</h2>
     <p>
       AH STORE هو متجر إلكتروني رائد في عالم الموضة، متخصص في تقديم أفضل تشكيلات الملابس النسائية والرجالية والأطفال.
       نسعى دائمًا لاختيار منتجات ذات جودة عالية وتصاميم عصرية تلائم كل الأذواق. فريقنا يعمل مع موردين موثوقين
       لضمان توصيل منتجات مطابقة للمواصفات، ونحن نفخر بسرعة الاستجابة وخدمة العملاء المتميزة.
       <br><br>
-      رؤيتنا هي أن نصبح وجهة التسوق الأولى للعائلة المصرية، من خلال الجمع بين الأناقة والسعر المناسب وجودة المنتج.
-      نعمل باستمرار على تطوير تجربة الشراء، من عرض المنتجات، حتى الدفع والتوصيل وما بعد البيع، لضمان راحة ورضا كل عميل.
+      نؤمن في AH STORE أن كل قطعة ملابس يجب أن تحمل قيمة حقيقية: جودة خامة ممتازة، تفصيل أنيق، وسعر عادل.
+      نعمل على اختبار كل منتج قبل عرضه، ونتابع آراء العملاء باستمرار لتحسين اختياراتنا. رؤيتنا أن نصبح وجهة التسوق الأولى
+      للعائلة العربية، من خلال الجمع بين الأناقة والسعر المناسب وجودة المنتج.
+      <br><br>
+      كما نحرص على سهولة تجربة الشراء: صفحات المنتجات واضحة، وصف تفصيلي، طرق دفع مرنة، وشحن سريع وآمن.
+      دعم العملاء لدينا متاح دائمًا للرد على الأسئلة ومتابعة الطلبات من البداية حتى التوصيل.
     </p>
   </div>
 
@@ -337,18 +332,18 @@
     <p style="margin-top:18px">© 2025 AH STORE — جميع الحقوق محفوظة</p>
   </footer>
 
-  <!-- bottom nav mobile -->
+  <!-- bottom nav (mobile) -->
   <nav class="bottom-nav" aria-hidden="false">
     <a href="#">الرئيسية</a>
     <a href="#products">التصنيفات</a>
-    <a class="center" href="#contact">س</a>
-    <a href="#">بحث</a>
+    <a class="bottom-center" href="#contact">اطلب</a>
+    <a href="#about">عن المتجر</a>
     <a href="#">حقيبة</a>
   </nav>
 
-  <!-- small script for search placeholder + animations -->
+  <!-- small script -->
   <script>
-    // simple search filter (client-side) - searches product titles
+    // search filter simple
     const searchInput = document.getElementById('searchInput');
     searchInput.addEventListener('input', function(){
       const q = this.value.trim().toLowerCase();
@@ -370,5 +365,56 @@
     });
   </script>
 
+</body>
+</html>
+
+   
+
+  <section class="products">
+    <div class="product-card">
+      <div class="product-card">
+  <img src="images/جيبه مشجره ببلوزه.jpg" alt="منتج">
+  <h3>جيبه مشجره ببلوزه اسود</h3>
+  <p>خامة قطن 100% — كل المقاسات</p>
+
+  <p class="price">السعر: 300 جنيه</p>
+
+  <a href="checkout.html" class="btn">اطلب الآن</a>
+</div>
+<div class="product-card">
+  <img src="images/دريس احمر مشجر.jpg" alt="منتج">
+  <h3>دريس احمر مشجر مستورد</h3>
+  <p>خامة قطن 100% — كل المقاسات</p>
+
+  <p class="price">السعر: 500 جنيه</p>
+
+  <a href="checkout.html" class="btn">اطلب الآن</a>
+</div>
+<div class="product-card">
+  <img src="images/دريس بني.jpg" alt="منتج">
+  <h3>دريس بني شيك مستورد</h3>
+  <p>خامة قطن 100% — كل المقاسات</p>
+
+  <p class="price">السعر: 450 جنيه</p>
+
+  <a href="checkout.html" class="btn">اطلب الآن</a>
+</div>
+<div class="product-card">
+  <img src="images/دريس رصاصي.jpg" alt="منتج">
+  <h3>دريس رصاصي مستورد</h3>
+  <p>خامة قطن 100% — كل المقاسات</p>
+
+  <p class="price">السعر: 400 جنيه</p>
+
+  <a href="checkout.html" class="btn">اطلب الآن</a>
+</div>
+      <img src="" alt="منتج">
+      <h3>اسم المنتج</h3>
+      <p>وصف مختصر للمنتج</p>
+      <a href="checkout.html" class="btn">اطلب الآن</a>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
 </body>
 </html>
