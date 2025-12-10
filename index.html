@@ -14,17 +14,12 @@
         .banner h2 {margin:0 0 10px;}
         section {padding:40px 20px; max-width:1200px; margin:auto;}
         section h2 {text-align:center; margin-bottom:30px; color:#ff6f61;}
-        .products {display:flex; flex-wrap:wrap; gap:20px; justify-content:center;}
-        .category {background:#fff; padding:20px; flex:1 1 300px; text-align:center; border-radius:10px; box-shadow:0 2px 5px rgba(0,0,0,0.1);}
-        .category img {width:100%; height:200px; object-fit:cover; border-radius:10px;}
-        .order-btn {display:inline-block; margin-top:10px; padding:10px 20px; background:#ff6f61; color:#fff; text-decoration:none; border-radius:5px;}
-        .order-btn:hover {background:#e65b50;}
-        .price {font-size:18px; font-weight:bold; color:#ff6f61; margin-top:5px;}
+        .btn-products {display:inline-block; padding:15px 30px; background:#ff6f61; color:#fff; text-decoration:none; font-size:18px; border-radius:10px; margin-top:20px;}
+        .btn-products:hover {background:#e65b50;}
         footer {background:#333; color:#fff; text-align:center; padding:20px;}
         ul.contact-links {list-style:none; padding:0; text-align:center;}
         ul.contact-links li {margin:10px 0;}
         ul.contact-links li a {color:#ff6f61; text-decoration:none; font-weight:bold;}
-        @media(max-width:768px){.products{flex-direction:column;}}
     </style>
 </head>
 <body>
@@ -35,7 +30,7 @@
         <nav>
             <ul>
                 <li><a href="#about">الرئيسية</a></li>
-                <li><a href="#products">المنتجات</a></li>
+                <li><a href="products.html">المنتجات</a></li>
                 <li><a href="#contact">تواصل معنا</a></li>
             </ul>
         </nav>
@@ -45,6 +40,7 @@
     <section class="banner">
         <h2>أهلاً بكم في AH STORE</h2>
         <p>أفضل المنتجات للرجالي والحريمي بالإضافة لأدوات منزلية متنوعة</p>
+        <a href="products.html" class="btn-products">شاهد المنتجات</a>
     </section>
 
     <!-- من نحن -->
@@ -65,63 +61,11 @@
         <p>تقديم منتجات متنوعة بجودة عالية مع ضمان تجربة شراء سهلة ومريحة لكل العملاء.</p>
     </section>
 
-    <!-- المنتجات -->
-    <section id="products">
-        <h2>منتجاتنا</h2>
-        <div class="products">
-            <!-- منتجات رجالي -->
-            <div class="category">
-                <img src="تيشرت رجالي.jpeg" alt="تيشرت رجالي">
-                <h3>تيشرت رجالي</h3>
-                <p class="price">450</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب تيشرت رجالي" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-            <div class="category">
-                <img src="جيبه مشجره ببلوزه.jpg" alt="جيبه مشجرة ببلوزه">
-                <h3>جيبه مشجرة ببلوزه</h3>
-                <p class="price">450</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب جيبه مشجرة ببلوزه" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-
-            <!-- منتجات حريمي -->
-            <div class="category">
-                <img src="دريس احمر مشجر.jpg" alt="دريس احمر مشجر">
-                <h3>دريس احمر مشجر</h3>
-                <p class="price">400</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب دريس احمر مشجر" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-            <div class="category">
-                <img src="دريس بني.jpg" alt="دريس بني">
-                <h3>دريس بني</h3>
-                <p class="price">560</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب دريس بني" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-            <div class="category">
-                <img src="دريس رصاصي.jpg" alt="دريس رصاصي">
-                <h3>دريس رصاصي</h3>
-                <p class="price">500</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب دريس رصاصي" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-            <div class="category">
-                <img src="دريس .jpeg" alt="دريس">
-                <h3>دريس</h3>
-                <p class="price">550</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب دريس" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-            <div class="category">
-                <img src="سوت قطعتين  طباعه وش وضهر. 450jpeg" alt="سوت قطعتين">
-                <h3>سوت قطعتين طباعه وش وضهر</h3>
-                <p class="price">450</p>
-                <a href="https://wa.me/01282749945?text=أريد طلب سوت قطعتين طباعه وش وضهر" target="_blank" class="order-btn">اطلب الآن</a>
-            </div>
-        </div>
-    </section>
-
     <!-- تواصل معنا -->
     <section id="contact">
         <h2>تواصل معنا</h2>
         <ul class="contact-links">
-            <li>واتساب مباشر: <a href="https://wa.me/01282749945" target="_blank">01282749945</a></li>
+            <li>واتساب مباشر: <a href="https://wa.me/201282749945" target="_blank">+20 1282749945</a></li>
             <li>قناة واتساب 1: <a href="https://whatsapp.com/channel/0029VanMJrZ3rZZYKVjgzd1c" target="_blank">اضغط هنا</a></li>
             <li>قناة واتساب 2: <a href="https://whatsapp.com/channel/0029VajD1a60VycE7t7Wik2W" target="_blank">اضغط هنا</a></li>
             <li>قناة واتساب 3: <a href="https://whatsapp.com/channel/0029VawlIEnKbYMSBkkidO0g" target="_blank">اضغط هنا</a></li>
